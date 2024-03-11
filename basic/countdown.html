@@ -52,16 +52,6 @@
       const minutesDom = document.querySelector("#minutes");
       const secondDom = document.querySelector("#seconds");
       const body = document.querySelector("body");
-      const bgList = ["background1.jpg", "background2.jpg", "background3.jpg"];
-
-      //배열 순서,규칙 없는것에 번호매기기
-      const randomPick = Math.floor(Math.random() * 3); // 0~1 실수 0*3 < Math.random()*3 <1*3
-      console.log(randomPick);
-      // console.log(bgList);
-
-      body.style.backgroundImage = "url(images/" + bgList[randomPick] + ")";
-      //유명 프로그래머의 명언10개 찾아서 배열에 넣고
-      //랜덤하게 출력되게 하세요
 
       const current = new Date(); //현재시간
       const last = new Date(2024, 9, 7); //차이는 millisecond 로 나옴
@@ -81,6 +71,18 @@
       minutesDom.textContent = addZero(minutes);
       secondDom.textContent = addZero(seconds);
     };
+    const body = document.querySelector("body");
+    const bgList = ["background1.jpg", "background2.jpg", "background3.jpg"];
+
+    //배열 순서,규칙 없는것에 번호매기기
+    const randomPick = Math.floor(Math.random() * 3); // 0~1 실수 0*3 < Math.random()*3 <1*3
+    console.log(randomPick);
+    // console.log(bgList);
+
+    body.style.backgroundImage = "url(images/" + bgList[randomPick] + ")";
+    //유명 프로그래머의 명언10개 찾아서 배열에 넣고
+    //랜덤하게 출력되게 하세요
+
     setInterval(remainTime, 1000);
     const randomePickWord = function () {
       const wordDom = document.querySelector("#wordList");
@@ -103,6 +105,6 @@
       // console.log(wordList);
       wordDom.textContent = wordList[randomNum];
     };
-    setInterval(randomePickWord, 1000);
+    setInterval(randomePickWord, 3000);
   </script>
 </html>
