@@ -1,0 +1,15 @@
+h1 {
+  font-weight: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .date {
+    font-weight: 100;
+    @include longShadow(500, #222);
+  }
+  .time {
+    font-weight: 400;
+    @include longShadow(500, #222);
+  }
+}
