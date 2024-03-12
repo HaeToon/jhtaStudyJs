@@ -54,7 +54,7 @@
       const body = document.querySelector("body");
 
       const current = new Date(); //현재시간
-      const last = new Date(2024, 9, 7); //차이는 millisecond 로 나옴
+      const last = new Date(2024, 2, 31); //차이는 millisecond 로 나옴
       const diff = (last - current) / 1000;
       const days = Math.floor(diff / 60 / 60 / 24);
       const hours = Math.floor(diff / 60 / 60) % 24;
@@ -76,17 +76,20 @@
 
     //배열 순서,규칙 없는것에 번호매기기
     const randomPick = Math.floor(Math.random() * 3); // 0~1 실수 0*3 < Math.random()*3 <1*3
-    console.log(randomPick);
+    // console.log(randomPick);
     // console.log(bgList);
 
     body.style.backgroundImage = "url(images/" + bgList[randomPick] + ")";
     //유명 프로그래머의 명언10개 찾아서 배열에 넣고
     //랜덤하게 출력되게 하세요
-
     setInterval(remainTime, 1000);
+
+    // 배열 array const ??? = ["???,"???","???",] or ???[0]= "블라블라";???[1]="블라블라"
     const randomePickWord = function () {
       const wordDom = document.querySelector("#wordList");
+
       const wordList = [
+        //{
         "컴퓨터는 쓸모가 없다. 그것은 그냥 대답만 할 수 있다 - Pablo Picasso",
         "하드웨어는 사람이 발로 걷어찰 수 있는 부분 - Jeff Pesis",
         "인터넷, 그게 아직도 있어? - Homer Simpson",
@@ -97,11 +100,12 @@
         "우리는 프로그래머 3대 미덕을 잘 알고 있다. 게으름, 괴팍함, 그리고 자만심 - Larry Wall",
         "자바는 많은 부분에서 C++-이다 - Michael Feldman",
         "훌륭한 코드는 훌륭한 문서보다 낫다 - Steve McConnell",
+        //},
       ];
-
-      const randomNum = Math.floor(Math.random() * 10); // 0~1 실수 0*3 < Math.random()*3 <1*3
+      // console.log(authors[0].authors);
+      const randomNum = Math.floor(Math.random() * 10); // 0~1 실수 0*10 < Math.random()*10 <1*10 = 0~10
       // console.log(wordList[randomNum]);
-      console.log(randomNum);
+      // console.log(randomNum);
       // console.log(wordList);
       wordDom.textContent = wordList[randomNum];
     };

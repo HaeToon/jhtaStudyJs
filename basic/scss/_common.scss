@@ -1,15 +1,25 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+ol,
+ul {
+  list-style: none;
 }
 body {
-  height: 100vh;
-  background-color: #333;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #333;
   color: #fff;
-  font-size: 3vw;
+  font-size: 50px;
   font-family: "Noto Sans KR";
+  overflow: hidden;
+}
+button {
+  background: none;
+  border: none;
 }
