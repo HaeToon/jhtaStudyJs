@@ -45,6 +45,19 @@ body {
     transition: all 1s ease;
     transform: translateY(0);
   }
+  &:after {
+    background: linear-gradient(-45deg, transparent 16px, #fff 0),
+      linear-gradient(45deg, transparent 16px, #fff 0);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-size: 10px 20px;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    bottom: -18px;
+  }
 }
 .list {
   display: flex;
@@ -91,5 +104,25 @@ body {
       background-color: $green;
       @include longShadow(50, darken($green, 10));
     }
+  }
+}
+
+.popup {
+  background-color: #fff;
+  padding: 20px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  .content {
+    width: 400px;
+    min-height: 300px;
+    background-color: #111;
+  }
+  .btn-close {
+    padding: 10px 15px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
   }
 }

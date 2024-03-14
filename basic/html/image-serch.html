@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>imgSerch</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="../css/imageSearch.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
+  </head>
+  <body>
+    <!-- crud c(post) read(get) u(put,patch) d(delete) -->
+    <!-- <form action="tjqjwnth" method="">
+      method는 "get" or "post"만 사용가능
+      <input type="text" name="user-name" />
+      <button>send</button>
+    </form> -->
+    <header>
+      <input type="text" class="search" />
+      <button class="btn-search">검색</button>
+    </header>
+    <div class="list-center">
+      <ul class="list"></ul>
+    </div>
+    <script>
+      fetch("https://dapi.kakao.com/v2/search/image?query=아이유", {
+        headers: {
+          Authorization: "KakaoAK 9933bc875fe2acbc59cd32ccb2db9365",
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+        });
+      const kakaoSearch = function (searchWord) {
+        // 폼태그 대용으로 ajax를 사용함.ajax안의 method= post or get default=get는 다 사용가능?
+        // $.ajax({
+        //   url:"서버주소",
+        //   method:"post"
+        //   headers: {
+        //     키:값
+        //   }
+        //   data: {
+        //     query:searchWord,
+        //   },
+        //   success:function(response) { //서버에 요청 = request 응답 = response
+        //     console.log(res);
+        //   },
+        //   error:function() {
+        //     에러처리를 어떻게할건지
+        //   }
+        // });
+
+        $.ajax({
+          url: "https://dapi.kakao.com/v2/search/image",
+          data: {
+            query: searchWord,
+            // size: 10,
+          },
+          // 토큰 인증비슷한그런
+          headers: {
+            Authorization: "KakaoAK 9933bc875fe2acbc59cd32ccb2db9365",
+          },
+          success: function (response) {
+            console.log(response.documents);
+
+            const documents = [...response.documents];
+
+            // documents.forEach(function (el, idx) {   //idx = 순서를 가리키는 매개변수 js의 function(a,b) a=el b=순서
+            //   console.log(el.thumbnail_url);
+            //   console.log(idx);
+            // });
+            let items = "";
+
+            $.each(documents, function (idx, el) {
+              //jquery 의 function(a,b) a=순서 b= el
+              // console.log(el, thumbnail_url);
+              items += `<li><a href=${el.image_url} data-fancybox="gallery"><img src=${el.thumbnail_url}></a></li>`;
+            });
+            $(".list").html(items);
+
+            // $(".list li").on("click", function () {
+            //   $("li").addClass("click");
+            // });
+          },
+          error: function (err) {
+            // console.log(err);
+            alert("검색에 실패했습니다.");
+          },
+        });
+      };
+      $(".btn-search").on("click", function () {
+        const search = $(".search").val();
+        kakaoSearch(search);
+        console.log(search);
+      });
+      $(".search").on("keydown", function (enterKey) {
+        if (enterKey.keyCode == 13) {
+          $(".btn-search").trigger("click");
+        }
+      });
+      //이벤트 위임 e.currentTarget 거는것과 같음
+      Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+      });
+    </script>
+  </body>
+</html>

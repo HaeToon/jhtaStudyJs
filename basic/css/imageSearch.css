@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  display: flex;
+}
+ul li,
+ol li {
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+ul li:hover,
+ol li:hover {
+  display: flex;
+  transform: translateY(-20px);
+  transform: scale(1.1);
+  transition: all 0.5s ease;
+  justify-content: center;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+header {
+  margin-top: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.list-center {
+  position: absolute;
+  height: 100vh;
+}
+
+.click2 {
+  display: flex;
+  transform: translateY(-20px);
+  transform: scale(4.5);
+  transition: all 0.5s ease;
+  justify-content: center;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}

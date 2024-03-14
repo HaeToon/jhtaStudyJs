@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  </head>
+  <body>
+    <form action="서버주소" method="">
+      <input type="text" name="user-id" />
+      <button>전송</button>
+    </form>
+    <input type="text" class="user-id" />
+    <button>전송</button>
+    <script>
+      $.ajax({
+        url: "요청을 보낼 서버주소",
+        method: "get", //default get  post사용가능 서버에 어떻게할건지 요청 응답 등
+        data: {
+          //서버로 보낼 데이터들
+          userId: "gxg4205",
+          password: "1234",
+        },
+        success: function (response) {
+          //성공시 하는 작업 서버가 내려주는 것들을 임의의변수에
+          console.log("성공");
+        },
+      });
+    </script>
+  </body>
+</html>

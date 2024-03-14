@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LottoPick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/lotto.css" />
+    <script src="
+https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
+"></script>
+  </head>
+  <body>
+    <div class="btns">
+      <button class="btn">01</button>
+      <button class="btn">02</button>
+      <button class="btn">03</button>
+      <button class="btn">04</button>
+      <button class="btn">05</button>
+    </div>
+    <div class="paper-wrap">
+      <div class="paper">
+        <ul class="list"></ul>
+      </div>
+    </div>
+    <script>
+      const shuffle = function (array) {
+        //구조분해 할당 array의 배열을 분해해서 arrayCopy에 할당.
+        const arrayCopy = [...array];
+        for (let i = 0; i < arrayCopy.length; i++) {
+          let first = Math.floor(Math.random() * arrayCopy.length); //3
+          let second = Math.floor(Math.random() * arrayCopy.length); //1
+          let fixed = arrayCopy[first];
+          arrayCopy[first] = arrayCopy[second];
+          arrayCopy[second] = fixed;
+        }
+        return arrayCopy;
+      };
+      const animals = ["cat", "lion", "dog", "tiger", "bear"];
+      console.log();
+      // const first = [0]
+      // const second = [1]
+      const [aa, bb, cc, dd, ee] = animals; //animals의 배열을 분해해서 순서대로 first,second에 할당하는것. = cat === dog ,,,first,second = 4번5번 할당
+      console.log(aa, bb, cc, dd, ee);
+      const [ff, gg, ...hh] = animals; // ff,gg를 분해 할당하고 나머지를 hh에 배열을 할당함. ...=나머지
+      const [...newAnimals] = animals; // 전부 분해후 newAnumals에 배열을 할당함. ...앞에 있는게 없으니 모두 할당.
+      // const newAnimals = animals; // 같은 주소를 할당하기때문에 animals와 같아짐.
+      console.log(newAnimals);
+      animals.push("rabbit");
+      console.log(newAnimals, "===", animals);
+
+      const shuffledAnimals = _.shuffle(animals); //Lodash 원본배열을 훼손하지않음
+      console.log(shuffledAnimals);
+      console.log(animals);
+      shuffle(animals);
+
+      //함수 선언문 statement
+      // functionShuffle();
+      // shuffle(); 오류발생
+      // function functionShuffle() {
+      //   console.log("나는 함수 선언문입니다");
+      // }
+      //함수 표현식 expression
+
+      const makeLotto = function () {
+        const nums = [];
+        const selectedNums = [];
+        // 1~45
+        for (let i = 0; i < 45; i++) {
+          nums.push(i + 1);
+        }
+        const shuffledNums = shuffle(nums);
+        for (let i = 0; i < 6; i++) {
+          selectedNums.push(shuffledNums[i]);
+        }
+        selectedNums.sort(function (a, b) {
+          return a - b;
+        });
+
+        for (let i = 0; i < 6; i++) {
+          const ball = selectedNums[i];
+          let color;
+
+          if (ball <= 10) {
+            color = "yellow";
+          } else if (ball <= 20) {
+            color = "blue";
+          } else if (ball <= 30) {
+            color = "red";
+          } else if (ball <= 40) {
+            color = "gray";
+          } else {
+            color = "green";
+          }
+          list.innerHTML += `<li class=${color}>${ball}</li>`;
+        }
+      };
+      const paper = document.querySelector(".paper");
+      const btn = document.querySelectorAll(".btn");
+      const list = document.querySelector(".list");
+
+      for (let i = 0; i < 5; i++) {
+        btn[i].addEventListener("click", function () {
+          for (let k = 0; k < 5; k++) {
+            if (i === k) {
+              btn[k].classList.add("on");
+            } else {
+              btn[k].classList.remove("on");
+            }
+          }
+
+          paper.classList.remove("on");
+          setTimeout(function () {
+            paper.classList.add("on");
+          }, 100);
+
+          list.innerHTML = "";
+
+          for (let j = 0; j < i + 1; j++) {
+            makeLotto();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

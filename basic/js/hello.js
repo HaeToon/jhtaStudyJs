@@ -24,3 +24,4 @@ let person = {
 }; //object
 console.log(yoil[1]);
 console.log(person.name);
+console.log(this);

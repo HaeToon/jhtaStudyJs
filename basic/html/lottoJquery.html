@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LottoPick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/lotto.css" />
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="btns">
+      <button class="btn">01</button>
+      <button class="btn">02</button>
+      <button class="btn">03</button>
+      <button class="btn">04</button>
+      <button class="btn">05</button>
+    </div>
+    <div class="paper-wrap">
+      <div class="paper">
+        <ul class="list"></ul>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="content">내용</div>
+      <div class="btn-box">
+        <button class="btn-close">닫기</button>
+      </div>
+    </div>
+
+    <script>
+      //html환경에서의 this는 윈도우를 가리킴
+      //함수내에 this는 호출될때 결정됨 누가호출한지 (일반함수만)
+      //arrow function에서의this는 선언되는시점의 환경으로 결정됨
+      const list = document.querySelectorAll(".btn");
+      //querySelectorAll을 사용시 NodeList 배열이긴하나 유사배열임
+      //유사배열에 for , length 사용가능
+      console.log(this); //js의 this 는 고정된값이아님
+      const jqueryList = $(".btn"); // $ = jQuery 알리아스
+      // for (let i = 0; i < 5; i++) {
+      //   list[i].addEventListener("click", function () {
+      //     console.log(this);
+      //     this.classList.add("on");
+      //   });
+      // }
+      list[0].addEventListener("click", function () {
+        // 모든 버튼을 사용하려면 list[0~4]로 반복문을 적용해야함
+        console.log("click");
+      });
+      list[1].addEventListener("click", function () {
+        // 모든 버튼을 사용하려면 list[0~4]로 반복문을 적용해야함
+        console.log("click");
+      });
+      // jqueryList.on("click", function () {
+      //   console.log(this);
+      //   // this.classList.add("on");
+      //   $(this).addClass("on");
+      //   // $(this).remove();
+      //   // this.addClass("on");
+      //   //모든 버튼을 사용
+      // });
+      jqueryList.on("click", function (e) {
+        $(this).siblings().removeClass("on");
+        $(e.currentTarget).addClass("on");
+      });
+      // jQuery(); //document.querySelector = jQuery()
+      const aa = function () {
+        console.log(this);
+      };
+      aa();
+      const myObj = {
+        bb: aa,
+      };
+
+      myObj.bb();
+      function cc() {
+        console.log("cc===", this);
+        function dd() {
+          console.log("dd===", this);
+        }
+        dd();
+      }
+      cc();
+      $(".popup .btn-close").on("click", function () {
+        $(".popup").hide();
+        // $(".popup").fadeOut();
+      });
+    </script>
+  </body>
+</html>
