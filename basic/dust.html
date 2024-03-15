@@ -119,7 +119,7 @@
             const items = [...response.response.body.items];
             console.log(items);
             console.log(sido);
-            $.each(items, function (dix, el) {
+            $.each(items, function (idx, el) {
               labelList.push(el.stationName);
               coValueList.push(el.coValue);
               so2ValueList.push(el.so2Value);
