@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Noto Sans KR;
+      }
+      .chart-box {
+        width: 1200px;
+        height: 580px;
+      }
+      .pickedDate {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pickedDate">
+      <input type="date" id="picked-date" />
+    </div>
+    <div class="chart-box">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      const ctx = $("#myChart").get();
+
+      // 위 내용과 같은것
+      // const ctx = $("myChart")[0];
+      // const ctx = document.getElementById("myChart");
+      // const str = "2024-03-14";
+
+      // console.log(str.split("-").join("")); //split = 문자열을 찢어 배열로바꿈join = 배열을 문자열로 바꿔 합쳐줌
+
+      $("#picked-date").on("change", function () {
+        console.log($(this).val().split("-").join(""));
+        loadData($(this).val().split("-").join(""));
+      });
+      let myChart = null;
+      const loadData = function (date) {
+        const labelList = [];
+        const dataList = [];
+        $.ajax({
+          url: "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
+          data: {
+            key: "f5eef3421c602c6cb7ea224104795888",
+            targetDt: date,
+          },
+          success: function (response) {
+            console.log(response.boxOfficeResult.dailyBoxOfficeList);
+            const boxOffice = [...response.boxOfficeResult.dailyBoxOfficeList];
+            console.log(boxOffice);
+            $.each(boxOffice, function (idx, el) {
+              labelList.push(el.movieNm);
+              dataList.push(el.audiAcc);
+            });
+            if (myChart !== null) {
+              myChart.destroy();
+            }
+            myChart = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: labelList,
+                datasets: [
+                  {
+                    label: "daily box office",
+                    data: dataList,
+                    borderWidth: 1,
+                    backgroundColor: [
+                      "#CB4335",
+                      "#1F618D",
+                      "#F1C40F",
+                      "#27AE60",
+                      "#884EA0",
+                      "#D35400",
+                    ],
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "일간 영화 관람 수",
+                  },
+                },
+              },
+            });
+          },
+        });
+      };
+      // 라이브러리 미사용시
+      // const addZero = function (num) {
+      //   return num < 10 ? "0" + num : num;
+      // };
+      //라이브러리 미사용시 복잡해짐
+      // const current = new Date();
+      // const year = current.getFullYear();
+      // const month = addZero(current.getMonth() + 1);
+      // const date = addZero(current.getDate() - 1);
+      //라이브러리 사용
+      const yesterday = dayjs().subtract(1, "day").format("YYYYMMDD");
+      loadData(yesterday);
+      $("#picked-date").val(dayjs().subtract(1, "day").format("YYYY-MM-DD"));
+    </script>
+  </body>
+</html>

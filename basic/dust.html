@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dust</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <style>
+      header {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <input type="text" class="search" />
+      <button class="btn-search">검색</button>
+    </header>
+    <div>
+      <select name="" id="sido">
+        <option value="서울">서울</option>
+        <option value="경기">경기</option>
+        <option value="부산">부산</option>
+        <option value="대구">대구</option>
+      </select>
+    </div>
+    <div class="chart-box">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      // let myChart = null;
+      // let searchWord;
+      // const ctx = $("#myChart").get();
+      // const searchBox = function (searchWord) {
+      //   const labelList = [];
+      //   const dataList = [];
+      //   $.ajax({
+      //     url: "https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty",
+      //     data: {
+      //       serviceKey:
+      //         "9RT4nPREIXp8V7g3pnYTha74vjcu4TQzkx4Jag9XgBjTnQyz3G6sAila4ilo59zQAq7U7t7GuEtHiu12+ig5tw==",
+      //       returnType: "json",
+      //       numOfRows: "1000",
+      //       pageNo: "1",
+      //       sidoName: searchWord,
+      //       ver: "1.0",
+      //     },
+      //     success: function (response) {
+      //       // console.log(response)  > console.log(response.response.body.items)
+      //       const dustOffice = [...response.response.body.items];
+      //       console.log(dustOffice); //검색결과가 잘 나오는지 확인
+      //       $.each(dustOffice, function (idx, el) {
+      //         labelList.push(el.stationName);
+      //         dataList.push(el.khaiValue);
+      //       });
+      //       if (myChart !== null) {
+      //         myChart.destroy();
+      //       }
+      //       myChart = new Chart(ctx, {
+      //         type: "bar",
+      //         data: {
+      //           labels: labelList,
+      //           datasets: [
+      //             {
+      //               label: "통합대기환경지수",
+      //               data: dataList,
+      //               borderWidth: 1,
+      //             },
+      //           ],
+      //         },
+      //         options: {
+      //           scales: {
+      //             y: {
+      //               beginAtZero: true,
+      //             },
+      //           },
+      //         },
+      //       });
+      //     },
+      //   });
+      // };
+      // $(".btn-search").on("click", function () {
+      //   const search = $(".search").val();
+      //   searchBox(search);
+      //   console.log(search);
+      // });
+      // $(".search").on("keydown", function (enterKey) {
+      //   if (enterKey.keyCode == 13) {
+      //     $(".btn-search").trigger("click");
+      //   }
+      // });
+      $("#sido").on("change", function () {
+        const sido = $(this).val();
+        loadData(sido);
+      });
+      let myChart = null;
+      const ctx = $("#myChart").get();
+      const loadData = function (sido) {
+        const labelList = [];
+        const coValueList = []; //일산화탄소
+        const so2ValueList = []; //아황산가스
+        const o3ValueList = []; //오존
+        const no2ValueList = []; //이산화질소
+        $.ajax({
+          url: "https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty",
+          data: {
+            serviceKey:
+              "9RT4nPREIXp8V7g3pnYTha74vjcu4TQzkx4Jag9XgBjTnQyz3G6sAila4ilo59zQAq7U7t7GuEtHiu12+ig5tw==",
+            returnType: "json",
+            numOfRows: "1000",
+            pageNo: "1",
+            sidoName: sido,
+            ver: "1.0",
+          },
+          success: function (response) {
+            const items = [...response.response.body.items];
+            console.log(items);
+            console.log(sido);
+            $.each(items, function (dix, el) {
+              labelList.push(el.stationName);
+              coValueList.push(el.coValue);
+              so2ValueList.push(el.so2Value);
+              o3ValueList.push(el.o3Value);
+              no2ValueList.push(el.no2Value);
+            });
+            if (myChart !== null) {
+              myChart.destroy();
+            }
+            myChart = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: labelList,
+                datasets: [
+                  {
+                    label: "일산화탄소",
+                    data: coValueList,
+                    borderWidth: 1,
+                  },
+                  {
+                    label: "아황산가스",
+                    data: so2ValueList,
+                    borderWidth: 1,
+                  },
+                  {
+                    label: "오존",
+                    data: o3ValueList,
+                    borderWidth: 1,
+                  },
+                  {
+                    label: "이산화질소",
+                    data: no2ValueList,
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  x: {
+                    stacked: true,
+                  },
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          },
+        });
+      };
+      $(".btn-search").on("click", function () {
+        const search = $(".search").val();
+        loadData(search);
+        console.log(search);
+      });
+      $(".search").on("keydown", function (enterKey) {
+        if (enterKey.keyCode == 13) {
+          $(".btn-search").trigger("click");
+        }
+      });
+    </script>
+  </body>
+</html>
