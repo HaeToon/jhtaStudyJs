@@ -1,0 +1,128 @@
+@import "vars";
+@import "mixin";
+@import "common";
+
+body {
+  font-family: "Noto Sans KR";
+  display: block;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+  gap: 50px;
+  .btn {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #ccc;
+    color: #fff;
+    &.on {
+      background-color: #f00;
+    }
+  }
+}
+.paper-wrap {
+  margin: auto;
+  width: 700px;
+  min-height: 300px;
+  overflow: hidden;
+}
+.paper {
+  min-height: 500px;
+  // width: 700px;
+  transform: translateY(-150%);
+  background-color: #fff;
+  &.on {
+    transition: all 1s ease;
+    transform: translateY(0);
+  }
+  &:after {
+    background: linear-gradient(-45deg, transparent 16px, #fff 0),
+      linear-gradient(45deg, transparent 16px, #fff 0);
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-size: 10px 20px;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    bottom: -18px;
+  }
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  gap: 5px;
+  padding: 50px 0;
+
+  $yellow: rgb(251, 196, 0);
+  $blue: rgb(105, 200, 242);
+  $red: rgb(255, 114, 114);
+  $gray: rgb(170, 170, 170);
+  $green: rgb(176, 216, 64);
+  li {
+    font-weight: 700;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f00;
+    color: #fff;
+    border-radius: 100px;
+    overflow: hidden;
+    &.yellow {
+      background-color: $yellow;
+      @include longShadow(50, darken($yellow, 10));
+    }
+    &.blue {
+      background-color: $blue;
+      @include longShadow(50, darken($blue, 10));
+    }
+    &.red {
+      background-color: $red;
+      @include longShadow(50, darken($red, 10));
+    }
+    &.gray {
+      background-color: $gray;
+      @include longShadow(50, darken($gray, 10));
+    }
+    &.green {
+      background-color: $green;
+      @include longShadow(50, darken($green, 10));
+    }
+  }
+}
+
+.popup {
+  background-color: #fff;
+  padding: 20px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  .content {
+    width: 400px;
+    min-height: 300px;
+    background-color: #111;
+  }
+  .btn-close {
+    padding: 10px 15px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #333;
+  background-image: url("../images/background1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+h1 {
+  position: absolute;
+  width: 100%;
+  font-weight: 200;
+  top: 50px;
+  text-align: center;
+  z-index: 10;
+  color: #ffffff;
+  text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+.date-box {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}
+.date-box .txt-box {
+  width: 300px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.date-box .txt-box:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+.date-box .txt-box p {
+  font-size: 5vw;
+  font-weight: 200;
+  margin-bottom: 20px;
+}
+
+.word-box {
+  position: absolute;
+  bottom: 150px;
+  font-size: 2.5vw;
+}

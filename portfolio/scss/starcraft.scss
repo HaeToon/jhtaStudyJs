@@ -1,0 +1,51 @@
+@import "vars";
+@import "mixin";
+@import "common";
+body {
+  overflow: auto;
+  display: block;
+  background-color: #111;
+  color: #00ff00;
+}
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #222;
+  overflow: hidden;
+  color: #4be8f2;
+  border-bottom: 1px solid #00ff00;
+}
+.list {
+  width: 1200px;
+  margin: 100px auto;
+  display: flex;
+  li {
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    background-color: #111;
+    border: 1px solid #00ff00;
+    margin: 10px;
+    padding: 10px;
+    img {
+      width: 100%;
+    }
+    .more {
+      padding: 10px 15px;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      border-radius: 100px;
+      margin: 10px 0;
+      display: inline-block; //넓이 높이 가지는 block인데 글자처럼 취급함
+      font-weight: 200;
+    }
+  }
+}
+button {
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px 0;
+}

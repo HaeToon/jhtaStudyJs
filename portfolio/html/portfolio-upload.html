@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="portfolio-upload-process.html" enctype="multipart/form-data">
+      <div>
+        <input type="text" placeholder="제목을 입력하세요." name="title" />
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" name="category" value="paint" />
+          <span>paint</span>
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="typo" />
+          <span>typo</span>
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="paint" />
+          <span>paint</span>
+        </label>
+      </div>
+      <div>
+        <input
+          type="number"
+          name="point"
+          placeholder="평점을 입력하세요."
+          min="0"
+          max="5"
+          step="0.1"
+        />
+      </div>
+      <div><textarea name="desc" id="" cols="30" rows="10"></textarea></div>
+      <div><input type="file" name="file" id="" /></div>
+      <button>전송</button>
+      http://127.0.0.1:5500/portfolio/html/portfolio-upload-process.html?
+      title=aa&category=paint&point=1.5&desc=adwaaa&file=%ED%96%84%EB%B2%84%EA%B1%B0.jpg
+    </form>
+  </body>
+</html>

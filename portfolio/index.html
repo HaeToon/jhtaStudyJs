@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <link rel="stylesheet" href="./css/starcraft.css" />
+  </head>
+  <body>
+    <header>
+      <h1>StarCraft</h1>
+    </header>
+    <div class="filter-box">
+      <button data-filter="item">All</button>
+      <button data-filter="Terran">Terran</button>
+      <button data-filter="building">building</button>
+      <button data-filter="gender">gender</button>
+    </div>
+    <div class="list-box">
+      <ul class="list"></ul>
+    </div>
+    <script>
+      let grid;
+      $.ajax({
+        url: "./data/our-class.json",
+        success: function (response) {
+          console.log(response);
+          // const unitList = response.unitList;
+          // const imageFolder = response.imageFolder;
+          const { unitList, imageFolder } = response;
+          let tempHtml = "";
+          $.each(unitList, function (idx, el) {
+            // const img = el;
+            // const name = el;
+            // const gender = el;
+            // const group = el;
+            // const building = el;
+            // const link = el;
+            const { img, name, gender, tribe, building, link, desc } = el;
+            tempHtml += `<li class="item ${tribe}">
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                  <a href="${link}">
+                    <img class="" src="./image/${img}" alt="" />
+                  </a>
+                  <div class="p-5">
+                    <a href="${link}">
+                      <h5 class="name">${name}</h5>
+                    </a>
+                    <p class="">${building}</p>
+                    <p class="">${desc}</p>
+                    <a href="${link}" class="more">
+                      Read more
+                    </a>
+                  </div>
+                </div>
+              </li>`;
+          });
+          $(".list").html(tempHtml);
+          $("#container")
+            .imagesLoaded()
+            .always(function (instance) {
+              console.log("all images loaded");
+              grid = $(".list").isotope({
+                getSortData: {
+                  title: ".title", // text from querySelector
+                  point: ".point",
+                },
+                // options
+                itemSelector: ".item",
+                layoutMode: "masonry",
+              });
+            })
+            .done(function (instance) {
+              console.log("all images successfully loaded");
+            })
+            .fail(function () {
+              console.log("all images loaded, at least one is broken");
+            })
+            .progress(function (instance, image) {
+              var result = image.isLoaded ? "loaded" : "broken";
+              console.log("image is " + result + " for " + image.img.src);
+            });
+        },
+      });
+      const filterArray = ["", "group", "gender", "building"];
+      $(".filter-box button").on("click", function () {
+        console.log($(this).data("filter"));
+        const filterItem = `.${$(this).data("filter")}`;
+        grid.isotope({
+          filter: filterItem,
+          sortBy: "point",
+        });
+        $(this).addClass("on").siblings().removeClass();
+      });
+    </script>
+  </body>
+</html>
